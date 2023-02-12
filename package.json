@@ -1,10 +1,9 @@
 {
   "name": "api",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Server ts-nest-graphql-microservice-nats-docker",
-  "author": "BipRaider",
+  "author": "a5",
   "private": true,
-  "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
