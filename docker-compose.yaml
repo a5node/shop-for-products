@@ -1,0 +1,83 @@
+version: "3.8"
+name: "ShopForProducts"
+
+services:
+    api:
+        extends:
+            file: ./docker/docker-compose.api.yaml
+            service: api
+        build:
+            context: ./
+            dockerfile: ./apps/api/Dockerfile
+        networks:
+            - tngmn
+
+    product:
+        extends:
+            file: ./docker/docker-compose.product.yaml
+            service: product
+        build:
+            context: ./
+            dockerfile: ./apps/product/Dockerfile
+        networks:
+            - tngmn
+
+    user:
+        extends:
+            file: ./docker/docker-compose.user.yaml
+            service: user
+        build:
+            context: ./
+            dockerfile: ./apps/user/Dockerfile
+        networks:
+            - tngmn
+
+    order:
+        extends:
+            file: ./docker/docker-compose.order.yaml
+            service: order
+        build:
+            context: ./
+            dockerfile: ./apps/order/Dockerfile
+        networks:
+            - tngmn
+
+    # providers
+    mongo:
+        extends:
+            file: ./docker/docker-compose.mongo.yaml
+            service: mongo
+        networks:
+            - tngmn
+
+    nats:
+        extends:
+            file: ./docker/docker-compose.nats.yaml
+            service: nats
+        networks:
+            - tngmn
+
+    redis:
+        extends:
+            file: ./docker/docker-compose.redis.yaml
+            service: redis
+        networks:
+            - tngmn
+
+    redis-commander:
+        extends:
+            file: ./docker/docker-compose.redis.yaml
+            service: redis-commander
+        depends_on:
+            - redis
+        networks:
+            - tngmn
+
+networks:
+    tngmn:
+        driver: bridge
+
+volumes:
+    tngmndata:
+    tngmnradis:
+

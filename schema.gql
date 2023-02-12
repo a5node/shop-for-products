@@ -1,0 +1,368 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type PrivateData {
+  firstname: String
+  lastname: String
+}
+
+type LoginUserResponse {
+  id: ObjectID
+  created: Date
+  updated: Date
+  name: String
+  email: String
+  roles: [Roles!]
+  privateData: PrivateData
+  access_token: String!
+}
+
+"""Roles for Admin creating projects and users"""
+enum Roles {
+  USER
+  SELLER
+  MANAGER
+  MERCHANT
+  MODERATO
+  ADMIN
+}
+
+type RefreshTokenResponse {
+  id: ObjectID
+  email: String
+  roles: [Roles!]
+  access_token: String
+}
+
+type AllProductsResponse {
+  id: ObjectID
+  created: Date
+  updated: Date
+  userId: ObjectID
+  storeId: ObjectID
+  price: Float
+  amount: Int
+  discount: Int
+  description: String
+  name: String
+  isRemove: Boolean
+}
+
+type CreateProductResponse {
+  id: ObjectID
+  created: Date
+  updated: Date
+}
+
+type FindProductResponse {
+  id: ObjectID
+  created: Date
+  updated: Date
+  userId: ObjectID
+  storeId: ObjectID
+  price: Float
+  amount: Int
+  discount: Int
+  description: String
+  name: String
+  isRemove: Boolean
+}
+
+type GetProductsResponse {
+  id: ObjectID
+  created: Date
+  updated: Date
+  userId: ObjectID
+  storeId: ObjectID
+  price: Float
+  amount: Int
+  discount: Int
+  description: String
+  name: String
+  isRemove: Boolean
+}
+
+type CreateUserResponse {
+  id: ObjectID
+  created: Date
+  updated: Date
+}
+
+type GetUserResponse {
+  id: ObjectID
+  created: Date
+  updated: Date
+  name: String
+  email: String
+  roles: [Roles!]
+  privateData: PrivateData
+}
+
+type AllOrdersResponse {
+  id: ObjectID
+  created: Date
+  updated: Date
+  customer: ObjectID
+  products: ObjectID
+  codeOrder: String
+  price: Float
+  paid: ORDER_PAID
+  processed: ORDER_PROCESS
+  send: ORDER_SEND
+  received: ORDER_RECEIVE
+  exchange: ORDER_EXCHANGE
+  isCancel: Boolean
+  isState: Boolean
+}
+
+"""State variables of payment."""
+enum ORDER_PAID {
+  expectation
+  paid
+  check
+  ok
+  incomplete
+  mistake
+  refund
+  no_refund
+}
+
+"""State variables of process."""
+enum ORDER_PROCESS {
+  unused
+  expectation
+  check
+  complete
+  incomplete
+  cancel
+  mistake
+}
+
+"""State variables of send."""
+enum ORDER_SEND {
+  unused
+  expectation
+  check
+  send
+  stop
+  cancel
+}
+
+"""State variables of receive."""
+enum ORDER_RECEIVE {
+  unused
+  expectation
+  check
+  complete
+  exchange
+  mistake
+}
+
+"""State variables of exchange."""
+enum ORDER_EXCHANGE {
+  unused
+  expectation
+  check
+  ok
+  no_refund
+  refundable
+}
+
+type CreateOrderResponse {
+  id: ObjectID
+  created: Date
+  updated: Date
+  codeOrder: String
+  price: Float
+  paid: ORDER_PAID
+}
+
+type FindOrderResponse {
+  id: ObjectID
+  created: Date
+  updated: Date
+  customer: ObjectID
+  products: ObjectID
+  codeOrder: String
+  price: Float
+  paid: ORDER_PAID
+  processed: ORDER_PROCESS
+  send: ORDER_SEND
+  received: ORDER_RECEIVE
+  exchange: ORDER_EXCHANGE
+  isCancel: Boolean
+  isState: Boolean
+}
+
+type GetOrdersResponse {
+  id: ObjectID
+  created: Date
+  updated: Date
+  customer: ObjectID
+  products: ObjectID
+  codeOrder: String
+  price: Float
+  paid: ORDER_PAID
+  processed: ORDER_PROCESS
+  send: ORDER_SEND
+  received: ORDER_RECEIVE
+  exchange: ORDER_EXCHANGE
+  isCancel: Boolean
+  isState: Boolean
+}
+
+type UpdateOrderResponse {
+  id: ObjectID
+  created: Date
+  updated: Date
+  customer: ObjectID
+  products: ObjectID
+  codeOrder: String
+  price: Float
+  paid: ORDER_PAID
+  processed: ORDER_PROCESS
+  send: ORDER_SEND
+  received: ORDER_RECEIVE
+  exchange: ORDER_EXCHANGE
+  isCancel: Boolean
+  isState: Boolean
+}
+
+"""Date custom scalar type"""
+scalar Date
+
+"""Mongo object id scalar type"""
+scalar ObjectID
+
+type Query {
+  getUser(data: GetUserInput!): GetUserResponse!
+  getUsers(data: GetUsersInput!): [GetUserResponse!]!
+  findProduct(data: FindProductInput!): FindProductResponse!
+  getProducts(data: GetProductsInput!): [GetProductsResponse!]!
+  allProducts(data: AllProductsInput!): [AllProductsResponse!]!
+  gitHubAuth(input: SocialAuthInput!): String!
+  redditAuth(input: SocialAuthInput!): String!
+  googleAuth(input: SocialAuthInput!): String!
+  getGoogleAuthURL: String!
+  findOrder(data: FindOrderInput!): FindOrderResponse!
+  getOrders(data: GetOrdersInput!): [GetOrdersResponse!]!
+  allOrders(data: AllOrdersInput!): [AllOrdersResponse!]!
+}
+
+input GetUserInput {
+  id: ObjectID
+  email: String
+}
+
+input GetUsersInput {
+  skip: Int
+  limit: Int
+}
+
+input FindProductInput {
+  id: ObjectID!
+}
+
+input GetProductsInput {
+  userId: ObjectID
+  storeId: String
+  skip: Int
+  limit: Int
+}
+
+input AllProductsInput {
+  skip: Int
+  limit: Int
+  isRemove: Boolean
+  userId: ObjectID
+  storeId: ObjectID
+  price: Float
+  amount: Int
+  description: String
+  discount: Int
+  name: String
+}
+
+input SocialAuthInput {
+  code: String
+}
+
+input FindOrderInput {
+  id: ObjectID
+  codeOrder: String
+}
+
+input GetOrdersInput {
+  customer: ObjectID
+  skip: Int
+  limit: Int
+}
+
+input AllOrdersInput {
+  skip: Int
+  limit: Int
+  customer: ObjectID
+  codeOrder: String
+  price: Float
+  paid: ORDER_PAID
+  processed: ORDER_PROCESS
+  send: ORDER_SEND
+  received: ORDER_RECEIVE
+  exchange: ORDER_EXCHANGE
+  isCancel: Boolean
+  isState: Boolean
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): CreateUserResponse!
+  createProduct(input: CreateProductInput!): CreateProductResponse!
+  login(input: LoginUserInput!): LoginUserResponse!
+  refreshToken: RefreshTokenResponse
+  logout: Boolean!
+  createOrder(input: CreateOrderInput!): CreateOrderResponse!
+  orderUpdate(input: UpdateOrderInput!): UpdateOrderResponse!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  password: String!
+  privateData: PrivateDataInput
+}
+
+input PrivateDataInput {
+  firstname: String
+  lastname: String
+}
+
+input CreateProductInput {
+  userId: ObjectID!
+  storeId: ObjectID!
+  price: Float
+  amount: Int
+  description: String
+  discount: Int
+  name: String
+}
+
+input LoginUserInput {
+  password: String!
+  email: String!
+}
+
+input CreateOrderInput {
+  customer: ObjectID!
+  products: [ObjectID!]!
+}
+
+input UpdateOrderInput {
+  id: ObjectID!
+  paid: ORDER_PAID
+  processed: ORDER_PROCESS
+  send: ORDER_SEND
+  received: ORDER_RECEIVE
+  exchange: ORDER_EXCHANGE
+  isCancel: Boolean
+  isState: Boolean
+}
